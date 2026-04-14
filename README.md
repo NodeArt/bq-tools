@@ -16,11 +16,12 @@ Note that prefix/suffix will be concatenated as is without adding extra separato
 
 Usage example:
 ```sh
-npx nodeart-bq-cli --dataset=my_dataset --schemas-path=./schemas --table-prefix=project1_ --table-suffix=_stage
+npx nodeart-bq-cli --project=my_project --dataset=my_dataset --schemas-path=./schemas --table-prefix=project1_ --table-suffix=_stage
 ```
 
 |                env               |        arg       |  type  | required |            example           |                                               description                                               |
 |:--------------------------------:|:----------------:|:------:|:--------:|:----------------------------:|:-------------------------------------------------------------------------------------------------------:|
+| `BQ_PROJECT`                     | `--project`      | string |    NO    | `my_project`                 | Google Cloud Project ID. If not set, it will be taken from credentials.                                 |
 | `BQ_DATASET`                     | `--dataset`      | string |    YES   | `my_dataset`                 | Dataset ID. Ref: https://cloud.google.com/bigquery/docs/datasets#dataset-naming                         |
 | `BQ_SCHEMAS_PATH`                | `--schemas-path` | string |    YES   | `./path/to/schemas`          | Path to schemas directory                                                                               |
 | `GOOGLE_APPLICATION_CREDENTIALS` |         -        | string |    NO    | `./path/to/credentials.json` | Path to ADC file. Ref: https://cloud.google.com/docs/authentication/application-default-credentials#GAC |

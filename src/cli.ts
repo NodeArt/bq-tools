@@ -3,6 +3,7 @@ import { BigQueryNodeService } from './bigQueryNodeService';
 import { cfgString, getDirSchemas, readJsonFile } from './cfgUtils';
 
 const config = {
+  project: cfgString({ envName: 'BQ_PROJECT', argName: 'project' }),
   dataset: cfgString({ envName: 'BQ_DATASET', argName: 'dataset', required: true }),
   schemasPath: cfgString({ envName: 'BQ_SCHEMAS_PATH', argName: 'schemas-path', required: true }),
   tablesPrefix: cfgString({ envName: 'BQ_TABLE_PREFIX', argName: 'table-prefix' }),
@@ -22,7 +23,7 @@ void (async () => {
     throw new Error('Credentials must be specified');
   }
 
-  const bq = await new BigQueryNodeService(credentials);
+  const bq = new BigQueryNodeService(credentials, config.project);
   const schemas = await getDirSchemas(config.schemasPath);
 
   console.log(`Syncing dataset '${config.dataset}'`);
