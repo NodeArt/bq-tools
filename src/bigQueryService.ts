@@ -88,8 +88,8 @@ export class BigQueryService {
   protected readonly projectId;
   protected readonly authService;
 
-  constructor(credentials: ICredentials) {
-    this.projectId = credentials.project_id;
+  constructor(credentials: ICredentials, projectId?: string) {
+    this.projectId = projectId ?? credentials.project_id;
     this.authService = new AuthService(credentials);
   }
 
