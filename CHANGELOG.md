@@ -17,6 +17,12 @@ Changes that have yet to make it into the release version will be listed under `
 
 ## Unreleased
 
+## v1.1.0 - 2026-04-15
+
+### Added
+
+- Add ability to override project id from env/cli args
+
 ## v1.0.3 - 2025-07-03
 
 ### Fixed
