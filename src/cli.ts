@@ -2,6 +2,25 @@ import { AuthService, ICredentials } from './authService';
 import { BigQueryNodeService } from './bigQueryNodeService';
 import { cfgString, getDirSchemas, readJsonFile } from './cfgUtils';
 
+if (process.argv.includes('--help')) {
+  console.log(`
+Usage: npx nodeart-bq-cli [options]
+
+Options:
+  --project          Google Cloud Project ID (env: BQ_PROJECT)
+  --dataset          Dataset ID (env: BQ_DATASET) [REQUIRED]
+  --schemas-path     Path to schemas directory (env: BQ_SCHEMAS_PATH) [REQUIRED]
+  --table-prefix     Prefix for table names (env: BQ_TABLE_PREFIX)
+  --table-suffix     Suffix for table names (env: BQ_TABLE_SUFFIX)
+  --help             Show this help message
+
+Credentials (required one of):
+  GOOGLE_APPLICATION_CREDENTIALS  Path to ADC file
+  ADC_ENCODED                    Base64-encoded JSON value of ADC
+`);
+  process.exit(0);
+}
+
 const config = {
   project: cfgString({ envName: 'BQ_PROJECT', argName: 'project' }),
   dataset: cfgString({ envName: 'BQ_DATASET', argName: 'dataset', required: true }),
