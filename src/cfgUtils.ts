@@ -53,7 +53,7 @@ export const readJsonFile = async <T>(filePath: string): Promise<T> => {
   return JSON.parse(data);
 };
 
-export const getDirSchemas = async (dir: string) => {
+export const getDirSchemas = async (dir: string): Promise<Array<{ name: string; schema: TableSchema }>> => {
   const files = await fs.readdir(dir, { withFileTypes: true });
 
   return Promise.all(
