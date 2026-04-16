@@ -17,6 +17,12 @@ Changes that have yet to make it into the release version will be listed under `
 
 ## Unreleased
 
+## v1.1.1 - 2026-04-15
+
+### Changed
+
+- Throw error when no schemas are found
+
 ## v1.1.0 - 2026-04-15
 
 ### Added
