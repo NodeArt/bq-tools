@@ -68,3 +68,19 @@ export const getDirSchemas = async (dir: string): Promise<Array<{ name: string; 
     }),
   ).then((arr) => arr.flat());
 };
+
+export const getDirQueries = async (dir: string): Promise<Array<{ name: string; query: string }>> => {
+  const files = await fs.readdir(dir, { withFileTypes: true });
+
+  return Promise.all(
+    files.flatMap(async (f) => {
+      if (f.isFile() && f.name.endsWith('.view.sql')) {
+        const query = await fs.readFile(path.resolve(dir, f.name), { encoding: 'utf-8' });
+
+        return [{ name: path.basename(f.name, '.view.sql'), query }];
+      }
+
+      return [];
+    }),
+  ).then((arr) => arr.flat());
+};
