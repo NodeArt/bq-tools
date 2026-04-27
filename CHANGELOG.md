@@ -17,6 +17,8 @@ Changes that have yet to make it into the release version will be listed under `
 
 ## Unreleased
 
+## v1.2.0 - 2026-04-27
+
 ### Added
 
 - Support for views
