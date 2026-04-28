@@ -12,6 +12,8 @@ Credentials must be specified either via file path in `GOOGLE_APPLICATION_CREDEN
 
 Schemas to be synced must be located in directory specified in `schemas-path` parameter and named in the following format: `<table name>.schema.json` (e.g. `user.schema.json`). File content must be a valid JSON that satisfies `TableSchema` structure. Ref: https://cloud.google.com/bigquery/docs/reference/rest/v2/tables#TableSchema.
 
+Schemas to be synced must be located in directory specified in `schemas-path` parameter and named in the following format: `<table name>.view.sql` (e.g. `user.view.sql`). File content must be a valid SQL select statement.
+
 Note that prefix/suffix will be concatenated as is without adding extra separators since BigQuery supports multiple special characters that could be used as separators in tables' names. Ref: https://cloud.google.com/bigquery/docs/tables#table_naming.
 
 Usage example:

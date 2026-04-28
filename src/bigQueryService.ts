@@ -200,6 +200,35 @@ export class BigQueryService {
     }
   }
 
+  public async createOrUpdateViewQuery(datasetId: string, tableId: string, query: string) {
+    let exists = false;
+    try {
+      await this.request(`/datasets/${datasetId}/tables/${tableId}`, 'GET');
+      exists = true;
+    } catch (error) {
+      if (!(error instanceof BigQueryError) || error.code !== 404) {
+        throw error;
+      }
+    }
+
+    const body = {
+      tableReference: {
+        datasetId,
+        projectId: this.projectId,
+        tableId,
+      },
+      view: {
+        query,
+        useLegacySql: false,
+      },
+    };
+    if (exists) {
+      await this.request(`/datasets/${datasetId}/tables/${tableId}`, 'PATCH', body);
+    } else {
+      await this.request(`/datasets/${datasetId}/tables`, 'POST', body);
+    }
+  }
+
   public async insert(
     datasetId: string,
     tableId: string,

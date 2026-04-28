@@ -1,6 +1,6 @@
 import { AuthService, ICredentials } from './authService';
 import { BigQueryNodeService } from './bigQueryNodeService';
-import { cfgString, getDirSchemas, readJsonFile } from './cfgUtils';
+import { cfgString, getDirQueries, getDirSchemas, readJsonFile } from './cfgUtils';
 
 const config = {
   project: cfgString({ envName: 'BQ_PROJECT', argName: 'project' }),
@@ -25,10 +25,20 @@ void (async () => {
 
   const bq = new BigQueryNodeService(credentials, config.project);
   const schemas = await getDirSchemas(config.schemasPath);
+  const queries = await getDirQueries(config.schemasPath);
 
-  if (schemas.length === 0) {
-    throw new Error('No Schemas found');
+  if (schemas.length === 0 && queries.length === 0) {
+    throw new Error('No table schemas or view queries found');
   }
+
+  const tableNames = schemas.map((s) => s.name);
+  const viewNames = queries.map((s) => s.name);
+  for (const tableName of tableNames) {
+    if (viewNames.includes(tableName)) {
+      throw new Error('Table and view name collision');
+    }
+  }
+
   console.log(`Syncing dataset '${config.dataset}'`);
   await bq.createDatasetIfNotExists(config.dataset);
 
@@ -37,5 +47,12 @@ void (async () => {
 
     console.log(`Syncing table '${config.dataset}.${tableId}'`);
     await bq.createOrUpdateTableSchema(config.dataset, tableId, schema);
+  }
+
+  for (const { name, query } of queries) {
+    const tableId = `${config.tablesPrefix ?? ''}${name}${config.tablesSuffix ?? ''}`;
+
+    console.log(`Syncing view '${config.dataset}.${tableId}'`);
+    await bq.createOrUpdateViewQuery(config.dataset, tableId, query);
   }
 })();
