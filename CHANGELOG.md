@@ -17,6 +17,14 @@ Changes that have yet to make it into the release version will be listed under `
 
 ## Unreleased
 
+## v1.2.2 - 2026-07-31
+
+### Changed
+
+- Update production and development dependencies
+- Update the TypeScript and ESLint configuration for the latest compatible toolchain
+- Remove the unused HTML ESLint reporter
+
 ## v1.2.1 - 2026-07-31
 
 ### Fixed

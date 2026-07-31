@@ -36,7 +36,7 @@ export class AuthService {
 
   constructor(protected readonly credentials: ICredentials) {}
 
-  protected async getCryptoKey() {
+  protected async getCryptoKey(): Promise<jose.CryptoKey> {
     if (!this.cryptoKey) {
       this.cryptoKey = await jose.importPKCS8(this.credentials.private_key, 'RS256', { extractable: false });
     }
