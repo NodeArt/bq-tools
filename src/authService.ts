@@ -50,7 +50,7 @@ export class AuthService {
     const credentials = this.credentials;
     const scope = Array.isArray(scopes) ? scopes.join(' ') : scopes;
     const issued = Math.floor(Date.now() / 1000);
-    const expires = issued + 3600; // Max 1 hour
+    const assertionExpires = issued + 3600; // Max 1 hour
 
     const key = await this.getCryptoKey();
 
@@ -61,7 +61,7 @@ export class AuthService {
         .setIssuer(credentials.client_email)
         .setSubject(credentials.client_email)
         .setAudience(credentials.token_uri)
-        .setExpirationTime(expires)
+        .setExpirationTime(assertionExpires)
         .setIssuedAt(issued)
         .sign(key);
     } catch (error) {
@@ -80,11 +80,12 @@ export class AuthService {
     }
 
     const data = (await res.json()) as IAccessTokenResponse;
+    const expiresIn = Number.isFinite(data.expires_in) && data.expires_in > 0 ? Math.floor(data.expires_in) : 3600;
 
     return {
       accessToken: data.access_token.replace(/\.+$/, ''),
       type: data.token_type,
-      expires,
+      expires: Math.floor(Date.now() / 1000) + expiresIn,
     };
   }
 

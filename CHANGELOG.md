@@ -17,6 +17,12 @@ Changes that have yet to make it into the release version will be listed under `
 
 ## Unreleased
 
+## v1.2.3 - 2026-07-31
+
+### Fixed
+
+- Use the OAuth response `expires_in` value for access token caching
+
 ## v1.2.2 - 2026-07-31
 
 ### Changed
