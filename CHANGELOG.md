@@ -17,6 +17,12 @@ Changes that have yet to make it into the release version will be listed under `
 
 ## Unreleased
 
+## v1.2.1 - 2026-07-31
+
+### Fixed
+
+- Refresh cached OAuth tokens before they expire
+
 ## v1.2.0 - 2026-04-27
 
 ### Added

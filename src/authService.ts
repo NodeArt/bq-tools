@@ -92,7 +92,7 @@ export class AuthService {
     const cacheKey = Array.isArray(scope) ? [...scope].sort().join(' ') : scope;
     let authToken = this.cache.get(cacheKey);
 
-    if (!authToken || authToken.expires < Math.floor(Date.now() / 1000) - 10 || resetCache) {
+    if (!authToken || authToken.expires < Math.floor(Date.now() / 1000) + 10 || resetCache) {
       authToken = await this.issueAuthToken(scope);
       this.cache.set(cacheKey, authToken);
     }
